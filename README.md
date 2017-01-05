@@ -195,18 +195,16 @@ First, a t-test is performed to test the significance of the difference between 
 
 Second, a bar chart is drawn to visualize the evident difference by gender in survival:
 
-<center>
-
+<p align="center">
  ![Survival by gender](survival_by_gender.png)
 
-</center>
+
 If we change our perspective to view the relationship between gender and survival, we can get a bar chart like this:
 
-<center>
-
+<p align="center">
 ![Gender by survival](gender.png)
- 
-</center>
+
+
 Both graphs reveal the same thing, that is, female passengers were given priority in evacuation and had higher survival rate.
 
 #### Question 3: Relationship between age and survival
@@ -257,6 +255,7 @@ First, I checked the mean of survival (which is also the survival rate) by class
 
 </center>
 It seems that survival rate reduces from higher to lower class, so I performed a t-test to compare the difference between every two classes.
+
 <center>
 
 | Class| t-stat|p-value|
