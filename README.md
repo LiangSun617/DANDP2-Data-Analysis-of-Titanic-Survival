@@ -100,10 +100,10 @@ titanic_df.head()
 ```
 and notice that variable "Sex","Pclass", and "Embarked" are categorical.
 
-Fourth, convert categorical into dummies:
+Fourth, convert categorical variables into dummies:
 
    ```
-   # "sex" is coded as 1=female and 0=male
+   # "sex" is recoded as 1=female and 0=male
 
     def convert_sex(sex):
         if sex == 'female':
@@ -135,7 +135,7 @@ Finally, check the descriptive statistics of all variables, and notice any varia
     titan_df['Embarked'].count()
    ```
 
-Variables "Age" and "Embarked" have missing values, which will be given certain attention in the data analysis.
+Variables "Age" and "Embarked" have missing values, which will be given certain attention to in the data analysis.
 
 The dataframe ```titan_df``` is used as the main data set in the following data analysis.
 
@@ -145,8 +145,9 @@ The dataframe ```titan_df``` is used as the main data set in the following data 
 The results are presented in response to each of the questions stated above.
 
 #### Question 1: Summary statistics
-
+<center>
 Table 1. Mean and standard deviation of main variables of full sample and subsamples by survival
+
 
 <center>
 
@@ -194,16 +195,18 @@ First, a t-test is performed to test the significance of the difference between 
 
 Second, a bar chart is drawn to visualize the evident difference by gender in survival:
 
-<p align="center">
- ![Survival by gender](survival_by_gender.png)
-</p>
+<center>
 
+ ![Survival by gender](survival_by_gender.png)
+
+</center>
 If we change our perspective to view the relationship between gender and survival, we can get a bar chart like this:
 
-<p align="center">
-![Gender by survival](gender.png)
-</p>
+<center>
 
+![Gender by survival](gender.png)
+ 
+</center>
 Both graphs reveal the same thing, that is, female passengers were given priority in evacuation and had higher survival rate.
 
 #### Question 3: Relationship between age and survival
@@ -232,7 +235,7 @@ The higher rate of survival among children than that among adults proves that ch
 
 #### Questions 4: Relationship between fare and survival
 
-A t-test is conducted to compare the difference in the mean of fare between non-survivors (mean=22.12) and survivors (mean=48.40). A significant result (t-stat=-7.939, p-value=0.000) suggests that survivors generally paid more than non-survivors for their tickets.
+A t-test is conducted to compare the difference in the means of fare between non-survivors (mean=22.12) and survivors (mean=48.40). A significant result (t-stat=-7.939, p-value=0.000) suggests that survivors generally paid more than non-survivors did for their tickets.
 
 A histogram is created to show the difference of fare between two groups:
 <p align="center">
@@ -318,7 +321,7 @@ The evident difference between mean values of class and ticket fare here suggest
 <p align="center">
 ![class by port](class_by_port.png)
 
-One may wonder why passengers from Cherbourg preferred first-class cabins. Although we do not have detailed background information of passengers who embarked from Cherbourg in the data, we know that Cherbourg is a port city in northwestern France and we can assume that a large proportion of the passengers who embarked from France might have a different reason for the trip than working-class immigrants. By checking some of the passengers' names online, I found there were tourists, opera singer, publisher, jewller, banker and people of similar socioeconomic status, among those who embarked from Cherbourg.
+One may wonder why passengers from Cherbourg preferred first-class cabins. Although we do not have detailed background information of passengers who embarked from Cherbourg in the data, we know that Cherbourg is a port city in northwestern France and we can assume that a large proportion of the passengers who embarked from France might have had a different reason for taking the trip than working-class immigrants. By checking some of the passengers' names online, I found there were tourists, opera singer, publisher, jewller, banker and people of similar socioeconomic status, among those who embarked from Cherbourg.
 
 Therefore, port of embarkation itself has no direct correlation with chance of survival, but passengers' class determines their chance of survival to a great extent.
 
@@ -359,7 +362,7 @@ The statistics and graph above suggest that even though women in general were gi
 
 - Interaction between age and class
 
-Children were also given priority to leave the ship, but did class also make it unequal to children in different classes?
+Children were also given priority to leave the ship, but did class also make the chance of survival unequal for children in different classes?
 
 First, I created a subset of data with children only (<=16 years old), and the means of survival, sex, and age are:
 
@@ -390,31 +393,31 @@ A bar chart is drawn to show the difference:
 
 The statistics and graph above suggest that children in different cabins did not have equal chance to survive, similar to what we found about women.
 
-In conclusion, although women and children had priority to evacuate first in general, their class largely intervened how much is their chance to survive.
+In conclusion, although women and children had priority to evacuate first in general, their class largely intervened their chance to survive.
 
 #### Question 8: Family loss of passengers who survived
 
 Every passenger had a ticket number and family were likely to share an identical ticket number, so people with same ticket number and with family members on board can be generally identified as family.
 
-Among 342 survivors, 72 (21.05% of the total) lost family members in the disasters. More than half of them lost at least two family members.
+Among 342 survivors, 72 (21.05%) lost family members in the disaster. More than half of them lost at least two family members.
 
 <p align="center">
 ![Family loss](hist_fam_loss.png)
 
-One limitation of the data is that we cannot differentiate between spouse and siblings, or between parents and children. If we know more specific information about family members, we could perform more detailed analysis of the relationship between survivors and non-survivors. For example, since women and children were given more chance to survive, we may wonder how many of them lost their spouse or parents?  
+One limitation of the data is that we cannot differentiate between spouse and siblings, or between parents and children. If we know more specific information about family members, we could perform more detailed analysis of the relationship between survivors and non-survivors. For example, since women and children were given greater chance to survive, we may wonder how many of them lost their spouse or parents?  
 
-The data only recorded family members including parents and children, spouses and siblings as two combined counts, which may have omitted other family members. I also notice that many peole shared the same ticket number but had no family relationship recorded. Such people might be relatives, friends, companions, colleagues, and so on. Therefore, many survivors have lived in severe pain of losing people they loved or they knew, or suffered from the experience of having seen other passengers die in the diaster, as historical records depicts.
+The data only recorded family members including parents and children, spouses and siblings as two combined counts, which may have omitted other family members. I also notice that many peole shared the same ticket number but had no family relationship recorded. Such people might be relatives, friends, colleagues, companions and so on. Therefore, many survivors since then have lived in severe pain of losing people they loved or they knew, or suffered from the experience of having seen other passengers die in the disaster, as historical records depict.
 
 
 #### Conclusion
 
-The chance of survival from the Titanic disaster was determined by a variety of factors, mainly including gender, age, and class of cabin. These factors reveal two sides of the story, humanity and disparity. Because of humanity, women and children had better chance of survival than men, regardless of their background. Meanwhile, due to different socioeconomic status, more than half of the passengers in our data could only afford third-class cabins, which lethally reduced their chance of survival. However, humanity shines more because it shows how people made selfless decisions in the face of disaster. It is really heart-touching that many gentlemen gave away their chance of get in lifeboats and insisted on "ladies and children first."
+The chance of survival from the Titanic disaster was determined by a variety of factors, mainly including gender, age, and class of cabin. These factors reveal two sides of the story, humanity and disparity. Because of humanity, women and children had better chance of survival than men, regardless of their background. Meanwhile, due to different socioeconomic status, more than half of the passengers in our data could only afford third-class cabins, which lethally reduced their chance of survival. However, humanity shines more because it shows how brave people made selfless decisions in the face of disaster. It is really heart-touching that many gentlemen gave away their chance of get in lifeboats and insisted on "ladies and children first."
 
-It is hard to say which factor plays a more critical role from the data analysis here, but we can be sure that chance of survival is the result of a combination of various factors, and we can have better understanding of the pattern if more detailed information is available.
+It is hard to say which factor plays a more critical role from the data analysis here, but we can be certain that chance of survival is the result of a combination of various factors, and we can have better understanding of the pattern if more detailed information is available.
 
 ### 6. Codes for data analysis
 
-Please check the "DAND_Project2_Titanic_code_for_analysis.ipynb" file uploaded in the repository.
+Please check the "DAND_Project2_Titanic_code_for_analysis.ipynb" file uploaded to the repository.
 
 ### References
 
