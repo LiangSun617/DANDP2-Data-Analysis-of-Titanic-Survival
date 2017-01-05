@@ -427,7 +427,7 @@ Please check the "DAND_Project2_Titanic_code_for_analysis.ipynb" file uploaded t
 * Concate dataframes http://pandas.pydata.org/pandas-docs/stable/merging.html
 * Drop missing values http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.dropna.html
 * Get dummies http://pandas.pydata.org/pandas-docs/stable/generated/pandas.get_dummies.html
-* Move and resize legender http://stackoverflow.com/questions/23238041/move-and-resize-legends-box-in-matplotlib
+* Move and resize legend http://stackoverflow.com/questions/23238041/move-and-resize-legends-box-in-matplotlib
 * Name ticks in boxplot http://stats.stackexchange.com/questions/3476/how-to-name-the-ticks-in-a-python-matplotlib-boxplot
 * Plot multiple boxplots in one graph http://stackoverflow.com/questions/27061137/plot-multiple-boxplot-in-one-graph-in-pandas-or-matplotlib
 * Sort dataframe by column http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.sort.html
