@@ -222,7 +222,7 @@ First, a contingency table is created between gender and survival:
 |*Total*|342|549|891|
 
 
-Second, a chi-squared test is conducted to test the relationship between these two variables. $\chi^2$-stat=260.717 and p-value = 0.000 suggest that "Sex" and "Survived" are dependent.
+Second, a chi-squared test is conducted to test the relationship between these two variables. chi^2-stat=260.717 and p-value = 0.000 suggest that "Sex" and "Survived" are dependent.
 
 Third, a bar chart is drawn to visualize the evident difference by gender in survival:
 
@@ -263,7 +263,7 @@ The contingency table between age group and "Survived" is:
 |Adult|235|379|614|
 |*Total*|290|424|714|
 
-The chi-squared test here suggests an association between the survival and age group ($\chi^2$-stat=9.293, p-value=0.003).
+The chi-squared test here suggests an association between the survival and age group ( chi^2-stat=9.293, p-value=0.003).
 
 
 
@@ -301,7 +301,7 @@ First, I checked the contingency table between survival and class of cabin:
 |*Total*|342|549|891|
 
 
-A chi-squared test ($\chi^2$-stat=102.889,p-value=0.000) suggests that class of cabin and survival are strongly associated.
+A chi-squared test (chi^2-stat=102.889,p-value=0.000) suggests that class of cabin and survival are strongly associated.
 
 A bar chart was drawn to show the difference between classes:
 <center>
@@ -323,7 +323,7 @@ Similarly, I got the contingency table between port of embarkation and survival:
 |*Total*|340|549|889|
 
 
-Given a chi-squared test ($\chi^2$-stat=26.489,p-value=0.000), these two variables seem to be associated.
+Given a chi-squared test (chi^2-stat=26.489,p-value=0.000), these two variables seem to be associated.
 
 In addition, a bar chart shows the difference:
 <center>
@@ -365,7 +365,7 @@ First, I created a subset of data with female observations only. The contingency
 |*Total*|233|81|314|
 
 
-A chi-squared test ($\chi^2$-stat=81.887,p-value=0.000) reveals a strong assication between these two variables.
+A chi-squared test (chi^2-stat=81.887,p-value=0.000) reveals a strong assication between these two variables.
 
 
 A bar chart is drawn to show the difference:
@@ -388,7 +388,7 @@ First, I created a subset of data with children only (<=16 years old), and the c
 |3|28|42|70|
 |*Total*|55|45|100|
 
-A chi-squared test ($\chi^2$-stat=21.219,p-value=0.000) reveals a strong assication between these two variables.
+A chi-squared test (chi^2-stat=21.219,p-value=0.000) reveals a strong assication between these two variables.
 
 A bar chart is drawn to show the difference:
 <center>
