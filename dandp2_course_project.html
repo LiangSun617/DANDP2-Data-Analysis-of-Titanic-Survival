@@ -11751,7 +11751,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="DAND-Project-2-Investigate-the-Dataset-of-Titanic">DAND Project 2 Investigate the Dataset of Titanic<a class="anchor-link" href="#DAND-Project-2-Investigate-the-Dataset-of-Titanic">&#182;</a></h2><h3 id="Liang-Sun">Liang Sun<a class="anchor-link" href="#Liang-Sun">&#182;</a></h3><h3 id="January-4,-2017">January 4, 2017<a class="anchor-link" href="#January-4,-2017">&#182;</a></h3>
+<h2 id="DAND-Project-2-Investigate-the-Dataset-of-Titanic">DAND Project 2 Investigate the Dataset of Titanic<a class="anchor-link" href="#DAND-Project-2-Investigate-the-Dataset-of-Titanic">&#182;</a></h2><h3 id="Liang-Sun">Liang Sun<a class="anchor-link" href="#Liang-Sun">&#182;</a></h3><h3 id="January-5,-2017">January 5, 2017<a class="anchor-link" href="#January-5,-2017">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -11917,7 +11917,7 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="3.-Description-of-investigation-steps">3. Description of investigation steps<a class="anchor-link" href="#3.-Description-of-investigation-steps">&#182;</a></h3><p>To investigate the questions stated above, I started with browsing the data structure and knowing what variables are included in the data, particularly the meaning and type of each variable and convert variables into format that is fit for data analysis.</p>
 <p>Second, I explored the descriptive statistics of variables, mainly mean and standard deviation of each variable. I also checked how the descriptive statistics vary between survivors and non-survivors. The variables that showed evident difference between two groups are likely to have had an impact on chance of survival.</p>
-<p>Third, I examined the relationship between possibly related variables by checking descriptive statistics and performing t-test. I also visualized the relationship between variables by drawing box plot, bar chart and histogram plot.</p>
+<p>Third, I examined the relationship between possibly related variables by checking descriptive statistics and performing t-test or chi-squared test. I also visualized the relationship between variables by drawing box plot, bar chart and histogram plot.</p>
 <p>In the whole process of investigation, I referred to online resources about Titanic historical records for a better understanding of how people survived or died in the disaster, so as to explain or support my findings from the data analysis. I also acquired solutions to tenical problems I came across in the coding process from websites of data and programming.</p>
 
 </div>
@@ -12027,7 +12027,18 @@ titanic_df = pd.read_csv(filename)</code></pre>
 <pre><code>    titan_df.describe()
 
     titan_df['Embarked'].count()</code></pre>
-<p>Variables "Age" and "Embarked" have missing values, which will be given certain attention in the data analysis.</p>
+<p>Variables "Age" and "Embarked" have missing values. The were 177 missing values for "Age" and 2 missing values for "Embarked".</p>
+<p>If we delete the missing values of these two variables listwise, we will lose 179 observations with non-missing values for other variables that will be examined in the analysis, although we can get a more consistent sample size throughout the whole analysis.</p>
+<p>However, I do not want to lose almost 20% of the observations. Since we mainly look at relationship between every two variables instead of performing a regression analysis that involve all variables at the same time, I will handle missing values case by case.</p>
+<p>When checking the relationship between "Age" and "Survived", I dropped observations with missing "Age":</p>
+
+<pre><code>  age_survival = titan_df[['Survived','Age']] # 891 observations
+  age_surv = age_survival.dropna() #Drop missing values of age, and 714 observations are kept</code></pre>
+<p>When checking the relationship between "Embarked" and "Survived", I dropped observations with missing "Embarked":</p>
+
+<pre><code>  port_survival = titan_df[['Survived','Embarked']]  
+  port_surv=port_survival.dropna()</code></pre>
+<p>Therefore, the missing values of "Age" or "Embarked" do not affect the analysis of other variables, such as "Sex", "Class", "Fare" and "Survived" which have no missing values.</p>
 
 </div>
 </div>
@@ -12252,6 +12263,15 @@ titanic_df = pd.read_csv(filename)</code></pre>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>From the summary statistics above, we can see that the total number of passengers in this data set is 891, among which 549 (61.62%) died in the disaster and 342(38.38%) survived.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>A variety of factors may have determined who could survive from the disaster. It seems that survivors and non-survivors had difference in most of their characteristics, given the mean values in their gender, age, class and so on. Thus, I am going to perform further detailed analysis on the relationship between each factor and survival.</p>
 
 </div>
@@ -12271,7 +12291,36 @@ titanic_df = pd.read_csv(filename)</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>First, a t-test is performed to test the significance of the difference between female and male in their chance of survival,and the result is significant(t-statistic=-19.298, p-value=0.000), which suggests that women had better chance to survive than men in this disaster.</p>
+<p>First, a contingency table is created between gender and survival:</p>
+<table>
+<thead><tr>
+<th style="text-align:center">Sex</th>
+<th style="text-align:center">Survived</th>
+<th style="text-align:center">Not Survived</th>
+<th style="text-align:center"><em>Total</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Male</td>
+<td style="text-align:center">109</td>
+<td style="text-align:center">468</td>
+<td style="text-align:center">577</td>
+</tr>
+<tr>
+<td style="text-align:center">Female</td>
+<td style="text-align:center">233</td>
+<td style="text-align:center">81</td>
+<td style="text-align:center">314</td>
+</tr>
+<tr>
+<td style="text-align:center"><em>Total</em></td>
+<td style="text-align:center">342</td>
+<td style="text-align:center">549</td>
+<td style="text-align:center">891</td>
+</tr>
+</tbody>
+</table>
 
 </div>
 </div>
@@ -12281,7 +12330,17 @@ titanic_df = pd.read_csv(filename)</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Second, a bar chart is drawn to visualize the evident difference by gender in survival:</p>
+<p>Second, a chi-squared test is conducted to test the relationship between these two variables. $\chi^2$-stat=260.717 and p-value = 0.000 suggest that "Sex" and "Survived" are dependent.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Third, a bar chart is drawn to visualize the evident difference by gender in survival:</p>
 <p><img src="survival_by_gender.png" alt="Survival by gender"></p>
 
 </div>
@@ -12322,12 +12381,10 @@ titanic_df = pd.read_csv(filename)</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To begin with, a t-test is performed to test the difference of age mean between survivor and non-survivors.</p>
+<p>To begin with, a t-test is performed to test the difference of age mean between survivor (28.344) and non-survivors (30.626).</p>
 <p>The result (t-stat=2.067 and pvalue=0.039) suggests that the difference is significant, which means that survivors' average age is significantly smaller than non-survivors.</p>
-<p>A box plot by survival group is created to show the difference:
-<img src="boxplot_age.png" alt="boxplot_age"></p>
-<p>and a histogram plot displays the distribution of age of survivors and non-survivors:
-<img src="hist_age.png" alt="histogram_age"></p>
+<p>A violin plot is created to show the difference in the distribution of age of survivors and non-survivors:
+<img src="violin_age.png" alt="violin"></p>
 
 </div>
 </div>
@@ -12337,11 +12394,50 @@ titanic_df = pd.read_csv(filename)</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can see that in the group of survivors, there are more passengers with age less than 20. It seems that younger passengers were likely to survive. Therefore, I am interested in comparing the survival rate between children (&lt;=16 years old) and adults.</p>
-<p>The t-test here also suggests a significant difference in the survival rate between children and adult (t-stat=2.067, p-value=0.039).</p>
+<p>We can see that in the group of survivors, there are more passengers with lower age. It seems that younger passengers were likely to survive. Therefore, I am interested in comparing the survival rate between children (&lt;=16 years old) and adults.</p>
+<p>The contingency table between age group and "Survived" is:</p>
+<table>
+<thead><tr>
+<th style="text-align:center">Age Group</th>
+<th style="text-align:center">Survived</th>
+<th style="text-align:center">Not Survived</th>
+<th style="text-align:center"><em>Total</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Children</td>
+<td style="text-align:center">55</td>
+<td style="text-align:center">45</td>
+<td style="text-align:center">100</td>
+</tr>
+<tr>
+<td style="text-align:center">Adult</td>
+<td style="text-align:center">235</td>
+<td style="text-align:center">379</td>
+<td style="text-align:center">614</td>
+</tr>
+<tr>
+<td style="text-align:center"><em>Total</em></td>
+<td style="text-align:center">290</td>
+<td style="text-align:center">424</td>
+<td style="text-align:center">714</td>
+</tr>
+</tbody>
+</table>
+<p>The chi-squared test here suggests an association between the survival and age group ($\chi^2$-stat=9.293, p-value=0.003).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Moreover, a bar chart was depicted to display such difference:</p>
 <p><img src="survival_by_kid.png" alt="Survival by age group"></p>
-<p>The higher rate of survival among children than that among adults proves that children were also given priority in evacuation.</p>
+<p>The higher proportion of survival among children than that among adults proves that children were also given priority in evacuation.</p>
 
 </div>
 </div>
@@ -12382,29 +12478,39 @@ titanic_df = pd.read_csv(filename)</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>First, I checked the mean of survival (which is also the survival rate) by class of cabin:</p>
+<p>First, I checked the contingency table between survival and class of cabin:</p>
 <table>
 <thead><tr>
-<th style="text-align:center">Class</th>
-<th style="text-align:center">Mean of Survival</th>
-<th style="text-align:center"><em>N</em></th>
+<th style="text-align:center">Class of cabin</th>
+<th style="text-align:center">Survived</th>
+<th style="text-align:center">Not Survived</th>
+<th style="text-align:center"><em>Total</em></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:center">1</td>
-<td style="text-align:center">0.623</td>
+<td style="text-align:center">136</td>
+<td style="text-align:center">80</td>
 <td style="text-align:center">216</td>
 </tr>
 <tr>
 <td style="text-align:center">2</td>
-<td style="text-align:center">0.473</td>
+<td style="text-align:center">87</td>
+<td style="text-align:center">97</td>
 <td style="text-align:center">184</td>
 </tr>
 <tr>
 <td style="text-align:center">3</td>
-<td style="text-align:center">0.242</td>
+<td style="text-align:center">119</td>
+<td style="text-align:center">372</td>
 <td style="text-align:center">491</td>
+</tr>
+<tr>
+<td style="text-align:center"><em>Total</em></td>
+<td style="text-align:center">342</td>
+<td style="text-align:center">549</td>
+<td style="text-align:center">891</td>
 </tr>
 </tbody>
 </table>
@@ -12417,33 +12523,7 @@ titanic_df = pd.read_csv(filename)</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It seems that survival rate reduces from higher to lower class, so I performed a t-test to compare the difference between every two classes.</p>
-<table>
-<thead><tr>
-<th style="text-align:center">Class</th>
-<th style="text-align:center">t-stat</th>
-<th style="text-align:center">p-value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">1 vs 2</td>
-<td style="text-align:center">3.179</td>
-<td style="text-align:center">0.002</td>
-</tr>
-<tr>
-<td style="text-align:center">1 vs 3</td>
-<td style="text-align:center">10.624</td>
-<td style="text-align:center">0.000</td>
-</tr>
-<tr>
-<td style="text-align:center">2 vs 3</td>
-<td style="text-align:center">5.931</td>
-<td style="text-align:center">0.000</td>
-</tr>
-</tbody>
-</table>
-<p>Every class is significantly different from another.</p>
+<p>A chi-squared test ($\chi^2$-stat=102.889,p-value=0.000) suggests that class of cabin and survival are strongly associated.</p>
 
 </div>
 </div>
@@ -12475,55 +12555,39 @@ The death rate for the third class is so much higher than the first and second!<
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Similarly, I got mean of survival for passengers from each port:</p>
+<p>Similarly, I got the contingency table between port of embarkation and survival:</p>
 <table>
 <thead><tr>
 <th style="text-align:center">Port</th>
-<th style="text-align:center">Mean of Survival</th>
-<th style="text-align:center"><em>N</em></th>
+<th style="text-align:center">Survived</th>
+<th style="text-align:center">Not Survived</th>
+<th style="text-align:center"><em>Total</em></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:center">Cherbourg</td>
-<td style="text-align:center">0.554</td>
+<td style="text-align:center">93</td>
+<td style="text-align:center">75</td>
 <td style="text-align:center">168</td>
 </tr>
 <tr>
 <td style="text-align:center">Queenstown</td>
-<td style="text-align:center">0.390</td>
+<td style="text-align:center">30</td>
+<td style="text-align:center">47</td>
 <td style="text-align:center">77</td>
 </tr>
 <tr>
 <td style="text-align:center">Southampton</td>
-<td style="text-align:center">0.337</td>
+<td style="text-align:center">217</td>
+<td style="text-align:center">427</td>
 <td style="text-align:center">644</td>
 </tr>
-</tbody>
-</table>
-<p>and t-test between means:</p>
-<table>
-<thead><tr>
-<th style="text-align:center">Port</th>
-<th style="text-align:center">t-stat</th>
-<th style="text-align:center">p-value</th>
-</tr>
-</thead>
-<tbody>
 <tr>
-<td style="text-align:center">C vs Q</td>
-<td style="text-align:center">2.401</td>
-<td style="text-align:center">0.017</td>
-</tr>
-<tr>
-<td style="text-align:center">C vs S</td>
-<td style="text-align:center">5.226</td>
-<td style="text-align:center">0.000</td>
-</tr>
-<tr>
-<td style="text-align:center">Q vs S</td>
-<td style="text-align:center">0.919</td>
-<td style="text-align:center">0.358</td>
+<td style="text-align:center"><em>Total</em></td>
+<td style="text-align:center">340</td>
+<td style="text-align:center">549</td>
+<td style="text-align:center">889</td>
 </tr>
 </tbody>
 </table>
@@ -12536,7 +12600,17 @@ The death rate for the third class is so much higher than the first and second!<
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>and a bar chart showing the difference:</p>
+<p>Given a chi-squared test ($\chi^2$-stat=26.489,p-value=0.000), these two variables seem to be associated.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In addition, a bar chart shows the difference:</p>
 <p><img src="survival_by_port.png" alt="survival by port"></p>
 <p>It seems that passengers from Cherbourg had higher chance of survival. How to explain this? Based on previous analysis, it is probably because port is correlated to other factors, such as gender, age, and class, which in fact determine their chance of survivial. So let's check how gender, age, and class vary by port.</p>
 
@@ -12629,33 +12703,39 @@ The death rate for the third class is so much higher than the first and second!<
 <ul>
 <li>Interaction between gender and class</li>
 </ul>
-<p>First, I created a subset of data with female observations only. The means of survival and age are grouped by class of cabin:</p>
+<p>First, I created a subset of data with female observations only. The contingency table between class and survival is:</p>
 <table>
 <thead><tr>
-<th style="text-align:center">Class</th>
-<th style="text-align:center">Survival</th>
-<th style="text-align:center">Age</th>
-<th style="text-align:center"><em>N</em></th>
+<th style="text-align:center">Class of cabin</th>
+<th style="text-align:center">Survived</th>
+<th style="text-align:center">Not Survived</th>
+<th style="text-align:center"><em>Total</em></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:center">1</td>
-<td style="text-align:center">0.968</td>
-<td style="text-align:center">34.612</td>
-<td style="text-align:center">85</td>
+<td style="text-align:center">91</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">94</td>
 </tr>
 <tr>
 <td style="text-align:center">2</td>
-<td style="text-align:center">0.921</td>
-<td style="text-align:center">28.723</td>
-<td style="text-align:center">74</td>
+<td style="text-align:center">70</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">76</td>
 </tr>
 <tr>
 <td style="text-align:center">3</td>
-<td style="text-align:center">0.500</td>
-<td style="text-align:center">21.750</td>
-<td style="text-align:center">102</td>
+<td style="text-align:center">72</td>
+<td style="text-align:center">72</td>
+<td style="text-align:center">144</td>
+</tr>
+<tr>
+<td style="text-align:center"><em>Total</em></td>
+<td style="text-align:center">233</td>
+<td style="text-align:center">81</td>
+<td style="text-align:center">314</td>
 </tr>
 </tbody>
 </table>
@@ -12668,32 +12748,7 @@ The death rate for the third class is so much higher than the first and second!<
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>A t-test is conducted between the survival rate of every two classes:</p>
-<table>
-<thead><tr>
-<th style="text-align:center">Class</th>
-<th style="text-align:center">t-stat</th>
-<th style="text-align:center">p-value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">1 vs 2</td>
-<td style="text-align:center">1.361</td>
-<td style="text-align:center">0.175</td>
-</tr>
-<tr>
-<td style="text-align:center">1 vs 3</td>
-<td style="text-align:center">8.694</td>
-<td style="text-align:center">0.000</td>
-</tr>
-<tr>
-<td style="text-align:center">2 vs 3</td>
-<td style="text-align:center">6.804</td>
-<td style="text-align:center">0.000</td>
-</tr>
-</tbody>
-</table>
+<p>A chi-squared test ($\chi^2$-stat=81.887,p-value=0.000) reveals a strong assication between these two variables.</p>
 
 </div>
 </div>
@@ -12728,37 +12783,39 @@ The death rate for the third class is so much higher than the first and second!<
 <li>Interaction between age and class</li>
 </ul>
 <p>Children were also given priority to leave the ship, but did class also make the chance of survival unequal for children in different classes?</p>
-<p>First, I created a subset of data with children only (&lt;=16 years old), and the means of survival, sex, and age are:</p>
+<p>First, I created a subset of data with children only (&lt;=16 years old), and the contingency table between class and survival is:</p>
 <table>
 <thead><tr>
-<th style="text-align:center">Class</th>
-<th style="text-align:center">Survival</th>
-<th style="text-align:center">Sex</th>
-<th style="text-align:center">Age</th>
-<th style="text-align:center"><em>N</em></th>
+<th style="text-align:center">Class of cabin</th>
+<th style="text-align:center">Survived</th>
+<th style="text-align:center">Not Survived</th>
+<th style="text-align:center"><em>Total</em></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:center">1</td>
-<td style="text-align:center">0.889</td>
-<td style="text-align:center">0.667</td>
-<td style="text-align:center">10.547</td>
+<td style="text-align:center">8</td>
+<td style="text-align:center">1</td>
 <td style="text-align:center">9</td>
 </tr>
 <tr>
 <td style="text-align:center">2</td>
-<td style="text-align:center">0.905</td>
-<td style="text-align:center">0.476</td>
-<td style="text-align:center">5.635</td>
+<td style="text-align:center">19</td>
+<td style="text-align:center">2</td>
 <td style="text-align:center">21</td>
 </tr>
 <tr>
 <td style="text-align:center">3</td>
-<td style="text-align:center">0.400</td>
-<td style="text-align:center">0.471</td>
-<td style="text-align:center">8.392</td>
+<td style="text-align:center">28</td>
+<td style="text-align:center">42</td>
 <td style="text-align:center">70</td>
+</tr>
+<tr>
+<td style="text-align:center"><em>Total</em></td>
+<td style="text-align:center">55</td>
+<td style="text-align:center">45</td>
+<td style="text-align:center">100</td>
 </tr>
 </tbody>
 </table>
@@ -12771,32 +12828,7 @@ The death rate for the third class is so much higher than the first and second!<
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>A t-test is conducted between the survival rate of every two classes:</p>
-<table>
-<thead><tr>
-<th style="text-align:center">Class</th>
-<th style="text-align:center">t-stat</th>
-<th style="text-align:center">p-value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">1 vs 2</td>
-<td style="text-align:center">-0.128</td>
-<td style="text-align:center">0.899</td>
-</tr>
-<tr>
-<td style="text-align:center">1 vs 3</td>
-<td style="text-align:center">2.880</td>
-<td style="text-align:center">0.005</td>
-</tr>
-<tr>
-<td style="text-align:center">2 vs 3</td>
-<td style="text-align:center">4.437</td>
-<td style="text-align:center">0.000</td>
-</tr>
-</tbody>
-</table>
+<p>A chi-squared test ($\chi^2$-stat=21.219,p-value=0.000) reveals a strong assication between these two variables.</p>
 
 </div>
 </div>
@@ -12838,7 +12870,7 @@ The death rate for the third class is so much higher than the first and second!<
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Every passenger had a ticket number and family were likely to share an identical ticket number, so people with same ticket number and with family members on board can be generally identified as family.</p>
-<p>Among 342 survivors, 72 (21.05% of the total) lost family members in the disasters. More than half of them lost at least two family members.</p>
+<p>Among 342 survivors, 53 (15.50% of the total) lost family members in the disaster. More than half of them lost at least two family members.</p>
 <p><img src="hist_fam_loss.png" alt="Family loss"></p>
 
 </div>
@@ -12849,8 +12881,7 @@ The death rate for the third class is so much higher than the first and second!<
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>One limitation of the data is that we cannot differentiate between spouse and siblings, or between parents and children. If we know more specific information about family members, we could perform more detailed analysis of the relationship between survivors and non-survivors. For example, since women and children were given more chance to survive, we may wonder how many of them lost their spouse or parents?</p>
-<p>The data only recorded family members including parents and children, spouses and siblings as two combined counts, which may have omitted other family members. I also notice that many peole shared the same ticket number but had no family relationship recorded. Such people might be relatives, friends, companions, colleagues, and so on. Therefore, many survivors have lived in severe pain of losing people they loved or they knew, or suffered from the experience of having seen other passengers die in the diaster, as historical records depicts.</p>
+<p>The data only recorded family members including parents and children, spouses and siblings as two combined counts, which may have omitted other family members. I also notice that many peole shared the same ticket number but had no family relationship recorded. Such people might be relatives, friends, colleagues, companions and so on. Therefore, many survivors since then have lived in severe pain of losing people they loved or they knew, or suffered from the experience of having seen other passengers die in the disaster, as historical records depict.</p>
 
 </div>
 </div>
@@ -12860,8 +12891,14 @@ The death rate for the third class is so much higher than the first and second!<
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h4><p>The chance of survival from the Titanic disaster was determined by a variety of factors, mainly including gender, age, and class of cabin. These factors reveal two sides of the story, humanity and disparity. Because of humanity, women and children had better chance of survival than men, regardless of their background. Meanwhile, due to different socioeconomic status, more than half of the passengers in our data could only afford third-class cabins, which lethally reduced their chance of survival. However, humanity shines more because it shows how people made selfless decisions in the face of disaster. It is really heart-touching that many gentlemen gave away their chance of get in lifeboats and insisted on "ladies and children first."</p>
-<p>It is hard to say which factor plays a more critical role from the data analysis here, but we can be sure that chance of survival is the result of a combination of various factors, and we can have better understanding of the pattern if more detailed information is available.</p>
+<h4 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h4><p>The chance of survival from the Titanic disaster was determined by a variety of factors, mainly including gender, age, and class of cabin. These factors reveal two sides of the story, humanity and disparity. Because of humanity, women and children had better chance of survival than men, regardless of their background. Meanwhile, due to different socioeconomic status, more than half of the passengers in our data could only afford third-class cabins, which lethally reduced their chance of survival. However, humanity shines more because it shows how brave people made selfless decisions in the face of disaster. It is really heart-touching that many gentlemen gave away their chance of get in lifeboats and insisted on "ladies and children first."</p>
+<p>It is hard to say which factor plays a more critical role from the data analysis here, but we can be certain that chance of survival is the result of a combination of various factors, and we can have better understanding of the pattern if more detailed information is available.</p>
+<p>With regard to the information available here, there are a few limitations of the data. If we are able to overcome these limitations, we will probably obtain more meaningful findings out of the data.</p>
+<p>First, the sample collected here may be biased. The data used here included 891 passengers, which is about 67.65% of all passengers (1317) and 40.06% of all passengers and crew aboard (2,224). We are not sure if the sample has a larger proportion of survivors among passengers (342/891 = 38.38%) than that of the population (724/2224 = 32.25%), unless we can figure out how many passengers or crew members survived among the population. It might have been easier to get information about survivors or people who died in the disaster but are known by survivors than information of the unknowns, so the information we have here may be not representative of the population.  If we have a complete or a larger sample including both passengers and crew members, we can have a more accurate sense of the survival rate of passengers and crew members on Titanic. With crew members information, we can also examine questions such as whether female crew members were also given priority in the evacuation.</p>
+<p>Second,the data provide unclear information about family members. We cannot differentiate between spouse and siblings, or between parents and children,as they were reported in combined counts. If we know more specific information about family members, we can perform more detailed analysis of the relationship between survivors and non-survivors. For example, since women and children had better chance to survive, we may wonder how many of them lost their spouse or parents. Did women with children have better chance to survive than women without children, or how about men with children? Did men with wife have better chance to survive? How did such chance vary by class of cabin?</p>
+<p>Third, the variable of cabin in the data was not usable for the analysis,as it was recorded in text. However, cabin can be an important indicator of survival if we know which level the cabins were located in. There were nine levels in Titanic, among which Deck A to F were for lounge rooms, eating areas and passenger quarters, and the others were for maintenance and storage. It seems that cabin can more accurately measure the distance from passenger to the deck than class of cabin does, because class of cabin has only three general categories, but within each class, cabins might be on different levels.</p>
+<p>In addition to the considerations above, here is one more idea about future research on the data.</p>
+<p>In theory, more people could have been saved if the lifeboats on Titanic were well and fully utilized. If we know which lifeboat the passenger was in (which is actually avaiable online) and the sequence of lifeboats leaving Titanic, we can perform a time analysis of the evacuation. For example, we may see the number of passengers in each lifeboat changed over time, or change in the gender,age,class composition of passengers in lifeboats over time. We may get a good idea of human's pyschology in crisis and draw lessons from the failure of crisis management in this disaster.</p>
 
 </div>
 </div>
@@ -12886,16 +12923,22 @@ The death rate for the third class is so much higher than the first and second!<
 <li>Bar chart <a href="https://pythonspot.com/matplotlib-bar-chart/">https://pythonspot.com/matplotlib-bar-chart/</a></li>
 <li>Change values of a column <a href="http://stackoverflow.com/questions/12604909/pandas-how-to-change-all-the-values-of-a-column">http://stackoverflow.com/questions/12604909/pandas-how-to-change-all-the-values-of-a-column</a></li>
 <li>Cherbourg <a href="https://en.wikipedia.org/wiki/Cherbourg-Octeville">https://en.wikipedia.org/wiki/Cherbourg-Octeville</a></li>
+<li>Chi-squared test in Python <a href="https://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.stats.chi2_contingency.html">https://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.stats.chi2_contingency.html</a></li>
 <li>Concate dataframes <a href="http://pandas.pydata.org/pandas-docs/stable/merging.html">http://pandas.pydata.org/pandas-docs/stable/merging.html</a></li>
 <li>Drop missing values <a href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.dropna.html">http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.dropna.html</a></li>
 <li>Get dummies <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.get_dummies.html">http://pandas.pydata.org/pandas-docs/stable/generated/pandas.get_dummies.html</a></li>
+<li>How many floors did the Titanic have <a href="https://www.reference.com/education/many-floors-did-titanic-1ee686f0a1ffe96d">https://www.reference.com/education/many-floors-did-titanic-1ee686f0a1ffe96d</a></li>
+<li>Merge dataframes <a href="http://pandas.pydata.org/pandas-docs/stable/merging.html">http://pandas.pydata.org/pandas-docs/stable/merging.html</a></li>
 <li>Move and resize legender <a href="http://stackoverflow.com/questions/23238041/move-and-resize-legends-box-in-matplotlib">http://stackoverflow.com/questions/23238041/move-and-resize-legends-box-in-matplotlib</a> </li>
 <li>Name ticks in boxplot <a href="http://stats.stackexchange.com/questions/3476/how-to-name-the-ticks-in-a-python-matplotlib-boxplot">http://stats.stackexchange.com/questions/3476/how-to-name-the-ticks-in-a-python-matplotlib-boxplot</a></li>
 <li>Plot multiple boxplots in one graph <a href="http://stackoverflow.com/questions/27061137/plot-multiple-boxplot-in-one-graph-in-pandas-or-matplotlib">http://stackoverflow.com/questions/27061137/plot-multiple-boxplot-in-one-graph-in-pandas-or-matplotlib</a></li>
+<li>Seaborn pair plot <a href="http://seaborn.pydata.org/generated/seaborn.pairplot.html">http://seaborn.pydata.org/generated/seaborn.pairplot.html</a></li>
+<li>Seaborn violin plot <a href="http://seaborn.pydata.org/generated/seaborn.violinplot.html">http://seaborn.pydata.org/generated/seaborn.violinplot.html</a></li>
 <li>Sort dataframe by column <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.sort.html">http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.sort.html</a></li>
 <li>Titanic <a href="https://en.wikipedia.org/wiki/RMS_Titanic#Survivors_and_victims">https://en.wikipedia.org/wiki/RMS_Titanic#Survivors_and_victims</a></li>
 <li>Titanic Documentary Video <a href="https://www.youtube.com/watch?v=SVLt9UfO3Q0">https://www.youtube.com/watch?v=SVLt9UfO3Q0</a></li>
 <li>Titanic facts <a href="https://www.encyclopedia-titanica.org/">https://www.encyclopedia-titanica.org/</a></li>
+<li>Titanic survivors <a href="https://www.encyclopedia-titanica.org/titanic-survivors/">https://www.encyclopedia-titanica.org/titanic-survivors/</a></li>
 <li>T-test in Pandas <a href="http://stackoverflow.com/questions/13404468/t-test-in-pandas-python">http://stackoverflow.com/questions/13404468/t-test-in-pandas-python</a></li>
 <li>Working with missing values <a href="http://pandas.pydata.org/pandas-docs/stable/missing_data.html">http://pandas.pydata.org/pandas-docs/stable/missing_data.html</a></li>
 </ul>
