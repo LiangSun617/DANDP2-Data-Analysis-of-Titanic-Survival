@@ -227,13 +227,13 @@ Second, a chi-squared test is conducted to test the relationship between these t
 Third, a bar chart is drawn to visualize the evident difference by gender in survival:
 
 <center>
-![Survival by gender](survival_by_gender.png)
+![Survival by gender](/image/survival_by_gender.png)
 </center>
 
 If we change our perspective to view the relationship between gender and survival, we can get a bar chart like this:
 
 <center>
-![Gender by survival](gender.png)
+![Gender by survival](/image/gender.png)
 </center>
 
 Both graphs reveal the same thing, that is, female passengers were given priority in evacuation and had higher survival rate.
@@ -248,7 +248,7 @@ A violin plot is created to show the difference in the distribution of age of su
 
 <center>
 
-![violin](violin_age.png)
+![violin](/image/violin_age.png)
 
 </center>
 
@@ -271,7 +271,7 @@ Moreover, a bar chart was depicted to display such difference:
 
 <center>
 
-![Survival by age group](survival_by_kid.png)
+![Survival by age group](/image/survival_by_kid.png)
 
 </center>
 
@@ -284,7 +284,7 @@ A t-test is conducted to compare the difference in the mean of fare between non-
 A histogram is created to show the difference of fare between two groups:
 
 <center>
-![fare by survival](hist_fare.png)
+![fare by survival](/image/hist_fare.png)
 </center>
 
 To understand how ticket fare is correlated with chance of survival, we need to further explore the factor--class of cabin, which was determined by the ticket price and probably had a more direct and crucial impact on one's access to the deck and lifeboat, given the fact that lifeboats were installed on the deck of the ship while cabins were ranked by order from upper to lower levels of the ship.
@@ -305,7 +305,7 @@ A chi-squared test (chi^2-stat=102.889,p-value=0.000) suggests that class of cab
 
 A bar chart was drawn to show the difference between classes:
 <center>
-![survival by class](survival_by_class.png)
+![survival by class](/image/survival_by_class.png)
 </center>
 The death rate for the third class is so much higher than the first and second!
 
@@ -327,7 +327,7 @@ Given a chi-squared test (chi^2-stat=26.489,p-value=0.000), these two variables 
 
 In addition, a bar chart shows the difference:
 <center>
-![survival by port](survival_by_port.png)
+![survival by port](/image/survival_by_port.png)
 </center>
 It seems that passengers from Cherbourg had higher chance of survival. How to explain this? Based on previous analysis, it is probably because port is correlated to other factors, such as gender, age, and class, which in fact determine their chance of survivial. So let's check how gender, age, and class vary by port.
 
@@ -342,7 +342,7 @@ It seems that passengers from Cherbourg had higher chance of survival. How to ex
 
 The evident difference between mean values of class and ticket fare here suggest passengers from Cherbourg were more likely to have bought first or second-class tickets than passengers from Queenstown and Southampton. I further plotted the number of passengers in each class by port:
 <center>
-![class by port](class_by_port.png)
+![class by port](/image/class_by_port.png)
 </center>
 One may wonder why passengers from Cherbourg preferred first-class cabins. Although we do not have detailed background information of passengers who embarked from Cherbourg in the data, we know that Cherbourg is a port city in northwestern France and we can assume that a large proportion of the passengers who embarked from France might have a different reason for the trip than working-class immigrants. By checking some of the passengers' names online, I found there were tourists, opera singer, publisher, jewller, banker and people of similar socioeconomic status, among those who embarked from Cherbourg.
 
@@ -370,7 +370,7 @@ A chi-squared test (chi^2-stat=81.887,p-value=0.000) reveals a strong assication
 
 A bar chart is drawn to show the difference:
 <center>
-![Female survival by class](female_survival_by_class.png)
+![Female survival by class](/image/female_survival_by_class.png)
 </center>
 The statistics and graph above suggest that even though women in general were given priority to evacuate in lifeboat, they did not have equal chance to do so depending on which class of cabins they were in. Women in first and second-class cabins had much greater chance of survival than those in third-class cabins.
 
@@ -392,7 +392,7 @@ A chi-squared test (chi^2-stat=21.219,p-value=0.000) reveals a strong assication
 
 A bar chart is drawn to show the difference:
 <center>
-![Kid survival by class](kid_survival_by_class.png)
+![Kid survival by class](/image/kid_survival_by_class.png)
 </center>
 The statistics and graph above suggest that children in different cabins did not have equal chance to survive, similar to what we found about women.
 
@@ -404,7 +404,7 @@ Every passenger had a ticket number and family were likely to share an identical
 
 Among 342 survivors, 53 (15.50% of the total) lost family members in the disaster. More than half of them lost at least two family members.
 <center>
-![Family loss](hist_fam_loss.png)
+![Family loss](/image/hist_fam_loss.png)
 </center>
 The data only recorded family members including parents and children, spouses and siblings as two combined counts, which may have omitted other family members. I also notice that many peole shared the same ticket number but had no family relationship recorded. Such people might be relatives, friends, colleagues, companions and so on. Therefore, many survivors since then have lived in severe pain of losing people they loved or they knew, or suffered from the experience of having seen other passengers die in the disaster, as historical records depict.
 
