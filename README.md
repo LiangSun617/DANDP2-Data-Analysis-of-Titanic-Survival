@@ -78,7 +78,7 @@ In the whole process of investigation, I referred to online resources about Tita
 
 First, import packages that will be used in the data analysis:
 
- ```
+ ``` python
  import matplotlib.pyplot as plt
  import numpy as np
  import pandas as pd
@@ -90,14 +90,14 @@ First, import packages that will be used in the data analysis:
  ```
 
 Second, read the data file from csv file and save as a Pandas dataframe:
-```
+``` python
 filename = 'C:/Users/Liang Sun/Documents/My NanoDegree/dandp2_project/titanic-data.csv'
 titanic_df = pd.read_csv(filename)
 ```
 
 Third, take a brief look at the data structure and variables,
 
-  ```
+  ``` python
   titanic_df.head()
   ```
 
@@ -105,7 +105,7 @@ Third, take a brief look at the data structure and variables,
 
 Fourth, convert categorical into dummies:
 
-   ```
+   ``` python
    # "sex" is coded as 1=female and 0=male
 
     def convert_sex(sex):
@@ -119,7 +119,7 @@ Fourth, convert categorical into dummies:
     titan_df.head()
    ```
 
-   ```
+   ``` python
    # "Pclass","Embarked" are categorical, so we get their dummies for analysis
 
     class_dummies = pd.get_dummies(titan_df['Pclass'],prefix='class')
@@ -132,7 +132,7 @@ Fourth, convert categorical into dummies:
 
 Finally, check the descriptive statistics of all variables, and notice any variables that have missing values,
 
-   ```
+   ``` python
     titan_df.describe()
 
     titan_df['Embarked'].count()
@@ -146,7 +146,7 @@ However, I do not want to lose almost 20% of the observations. Since we mainly l
 
 When checking the relationship between "Age" and "Survived", I dropped observations with missing "Age":
 
-  ```
+  ```python
   age_survival = titan_df[['Survived','Age']] # 891 observations
   age_surv = age_survival.dropna()
   #Drop missing values of age, and 714 observations are kept
@@ -154,7 +154,7 @@ When checking the relationship between "Age" and "Survived", I dropped observati
 
 When checking the relationship between "Embarked" and "Survived", I dropped observations with missing "Embarked":
 
-  ```
+  ```python
   port_survival = titan_df[['Survived','Embarked']]  
   port_surv=port_survival.dropna()  
   ```
